@@ -1,0 +1,111 @@
+h1{
+  background-color: ghostwhite;
+  color: #3b82f6;
+  padding: 20px;
+  margin: 0 0 50px;
+  font-family: Arial,serif;
+  font-size: 30px;
+  font-weight: 700;
+  text-align: center;
+small{
+  background-color: ghostwhite;
+  font-size: 18px;
+  display: block;
+  text-transform: none;
+  font-family: Arial,serif;
+  font-weight: 300;
+  margin-top: 10px;
+  color: #3b82f6;
+}
+}
+
+h2{
+  background-color: ghostwhite;
+  color: red;
+  padding: 20px;
+  margin: 0 0 50px;
+  font-family: Arial,serif;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+small{
+  background-color: ghostwhite;
+  font-size: 18px;
+  display: block;
+  text-transform: none;
+  font-family: Arial,serif;
+  font-weight: 300;
+  margin-top: 10px;
+  color: #3b82f6;
+}
+}
+
+.card {
+  background: ghostwhite;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0px 10px 40px rgba(41, 50, 65, 0.06);
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  margin-bottom: 2rem;
+}
+
+.cardCalendar {
+  background: ghostwhite;
+  padding: 5px;
+  box-sizing: border-box;
+  box-shadow: 0px 10px 40px rgba(41, 50, 65, 0.06);
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  margin-bottom: 2rem;
+}
+
+.cardAccord {
+  background: whitesmoke;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  outline: 1px solid rgba(59, 130, 246, 0.5);
+  box-sizing: border-box;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+  margin-bottom: 2rem;
+}
+
+
+.center-align {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.center-align-accord {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.p-float-label {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.custom-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.custom-input {
+  font-size: 12px;
+  width: 100px;
+}
+
+.custom-dropdown {
+  font-size: 12px;
+  width: 150px;
+}

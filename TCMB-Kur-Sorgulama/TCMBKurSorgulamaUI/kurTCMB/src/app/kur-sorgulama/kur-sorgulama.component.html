@@ -1,0 +1,132 @@
+<p-messages></p-messages>
+
+<h1>Tarih Bazlı Kur Sonuçları Görüntüleme</h1>
+<div class="grid">
+  <div class="col-12">
+    <div class="cardCalendar center-align">
+        <span class="p-float-label">
+          <p-calendar id="kurTarih" [(ngModel)]="currencyDate" dateFormat="dd.mm.yy" [showIcon]="true"
+          (ngModelChange)="listCurrency()"></p-calendar>
+          <label htmlFor="kurTarih">Tarih Seçiniz</label>
+        </span>
+      </div>
+  </div>
+</div>
+
+
+<div *ngIf="currencyDate != null" class="grid">
+  <div class="col-12">
+    <div class="card col-12">
+      <div class="col-12 center-align-accord">
+        <p-accordion>
+          <p-accordionTab header="{{this.datePipe.transform(currencyDate.toDateString(), 'fullDate')}} Dövize Göre TRY hesapla">
+            <div class="cardAccord field col-12">
+              <div class="field col-12">
+                <p-inputNumber [(ngModel)]="selectedCurrencyValue" mode="decimal" [minFractionDigits]="2" [maxFractionDigits]="5" placeholder="{{selectedCurrency != null? selectedCurrency.currencyCode : 'Para Birimi Seçiniz'}}" (ngModelChange)="calculate()"> </p-inputNumber>
+                <p-dropdown  autoWidth="false" [style]="{'width':'200px'}" [options]="currencyList" [(ngModel)]="selectedCurrency" optionLabel="isim" placeholder="Para Birimi Seçiniz" (onChange)="calculate()"></p-dropdown>
+              </div>
+              <div class="field col-12 center-align-accord">
+                <p-inputNumber [(ngModel)]="convertedCurrencyValue" mode="decimal" editable="false" [minFractionDigits]="2" [maxFractionDigits]="5" placeholder="TRY"> </p-inputNumber>
+                <label>{{selectedCurrency != null? selectedCurrency.currencyCode : ''}}/TRY</label>
+              </div>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+      <div class="col-12">
+        <p-tabView>
+          <p-tabPanel header="{{this.datePipe.transform(currencyDate.toDateString(), 'fullDate')}} Tarihli Kurlar ">
+            <div class="col-12">
+              <p-table
+                #dt1
+                [value]="currencyList" [tableStyle]="{ 'min-width': '50rem' }"
+                dataKey="id"
+                [globalFilterFields]="['isim', 'kod']"
+                [scrollable]="true" scrollHeight="500px">
+                <ng-template pTemplate="caption">
+                  <div class="flex">
+              <span class="p-input-icon-left" style="width:92%;">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt1.filterGlobal(searchValue, 'contains')" placeholder="Ara" pTooltip="Döviz cinsine veya birimine göre ara" />
+              </span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Döviz Kodu</th>
+                    <th>Birim</th>
+                    <th>Döviz Cinsi</th>
+                    <th>Döviz Alışı</th>
+                    <th>Döviz Satışı</th>
+                    <th>Efektif Alış</th>
+                    <th>Efektif Satış</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-currency>
+                  <tr>
+                    <td>
+                      <img src="assets/flags/{{currency.kod}}.svg" alt="" style="width: 75px; height: 30px; " pTooltip="{{currency.kod}}/TRY">
+                    </td>
+                    <td>{{ ' ' +currency.unit  | currency: currency.kod}}</td>
+                    <td>{{ currency.isim }}</td>
+                    <td>{{ currency.forexBuying }}</td>
+                    <td>{{ currency.forexSelling }}</td>
+                    <td>{{ currency.banknoteBuying }}</td>
+                    <td>{{ currency.banknoteSelling }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div> </p-tabPanel>
+          <p-tabPanel header="Çapraz Kurlar">
+            <div class="col-12">
+              <p-table
+                #dt2
+                [value]="currencyCrossList" [tableStyle]="{ 'min-width': '50rem' }"
+                dataKey="id"
+                [globalFilterFields]="['isim', 'kod']"
+                [scrollable]="true" scrollHeight="320px">
+                <ng-template pTemplate="caption">
+                  <div class="flex">
+              <span class="p-input-icon-left" style="width:92%;">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" [(ngModel)]="searchValue" (input)="dt2.filterGlobal(searchValue, 'contains')" placeholder="Ara" pTooltip="Döviz cinsine veya birimine göre ara" />
+              </span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Döviz Kodu</th>
+                    <th>Birim</th>
+                    <th>Döviz Cinsi</th>
+                    <th>Çapraz Kur</th>
+                    <th>Döviz Cinsi</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-currency>
+                  <tr>
+                    <td>
+                      <img src="assets/flags/{{currency.kod}}.svg" alt="" style="width: 75px; height: 30px; " pTooltip="{{currency.kod}}">
+                      {{currency.crossRateUSD != '' ? 'USD/' + currency.kod : currency.kod + '/USD' }}
+                    </td>
+                    <td>{{ ' ' +currency.unit  | currency: currency.kod}}</td>
+                    <td>{{ currency.crossRateUSD != '' ? 'ABD DOLARI' : currency.isim}}</td>
+                    <td>{{ currency.crossRateUSD != '' ? currency.crossRateUSD : currency.crossRateOther }}</td>
+                    <td>{{ currency.crossRateUSD != '' ? currency.isim : 'ABD DOLARI' }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </p-tabPanel>
+        </p-tabView>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isSuccesed" class="grid">
+  <div class="col-12">
+    <div class="card col-12">
+      <h2>Seçtiğiniz Tarihe Ait Kayıt Bulunmamaktadır. Farklı Bir Tarih İçin Tekrar Sorgulayınız.</h2>
+    </div>
+  </div>
+</div>
